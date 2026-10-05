@@ -71,14 +71,18 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun shell(command: String): String? = try {
-        if (!Shizuku.pingBinder() || Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) return null
-        val process = Shizuku.newProcess(arrayOf("sh", "-c", command), null, null)
-        val output = BufferedReader(InputStreamReader(process.inputStream)).readText().trim()
-        process.waitFor()
-        output
-    } catch (_: Exception) {
-        null
+    private fun shell(command: String): String? {
+        if (!Shizuku.pingBinder() || Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
+            return null
+        }
+        return try {
+            val process = Shizuku.newProcess(arrayOf("sh", "-c", command), null, null)
+            val output = BufferedReader(InputStreamReader(process.inputStream)).readText().trim()
+            process.waitFor()
+            output
+        } catch (_: Exception) {
+            null
+        }
     }
 
     private fun runCommand(command: String) {
