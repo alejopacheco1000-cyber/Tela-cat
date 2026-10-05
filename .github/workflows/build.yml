@@ -16,14 +16,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Download Shizuku libraries
-        run: |
-          mkdir -p app/libs
-          curl -fL https://repo1.maven.org/maven2/dev/rikka/shizuku/api/13.1.5/api-13.1.5.aar -o app/libs/shizuku-api.aar
-          curl -fL https://repo1.maven.org/maven2/dev/rikka/shizuku/provider/13.1.5/provider-13.1.5.aar -o app/libs/shizuku-provider.aar
-          curl -fL https://repo1.maven.org/maven2/dev/rikka/shizuku/aidl/13.1.5/aidl-13.1.5.aar -o app/libs/shizuku-aidl.aar
-          curl -fL https://repo1.maven.org/maven2/dev/rikka/shizuku/shared/13.1.5/shared-13.1.5.aar -o app/libs/shizuku-shared.aar
-
       - name: Build
         run: |
           curl -L https://services.gradle.org/distributions/gradle-8.10.2-bin.zip -o /tmp/gradle.zip
@@ -35,3 +27,4 @@ jobs:
         with:
           name: CatResolutionPro-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
